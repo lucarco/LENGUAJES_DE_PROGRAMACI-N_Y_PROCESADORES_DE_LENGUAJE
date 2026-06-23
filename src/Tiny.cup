@@ -1,0 +1,169 @@
+package constructorAST.constructorast;
+
+
+import java_cup.runtime.*;
+import constructorAST.alex.AnalizadorLexicoTiny;
+import constructorAST.alex.UnidadLexica;
+import constructorAST.alex.TokenValue;
+import constructorAST.errors.GestionErroresTiny;
+import constructorAST.ast.*;
+import java.util.LinkedList;
+import java_cup.runtime.ComplexSymbolFactory.Location;
+
+scan with {: return getScanner().next_token(); :};
+//action code {:
+//   ... add some code to declare and initialize e.g. variables used by the code embedded in the grammar
+//:};
+
+parser code {: 
+   private GestionErroresTiny errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+
+init with {: 
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoTiny alex = (AnalizadorLexicoTiny)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+//terminal IF, ELSE, WHILE, FOR;
+terminal TokenValue IF, ELSE, WHILE, FOR;
+terminal TIPO_ENT, TIPO_BOOL, TIPO_REAL;
+//terminal TRUE, FALSE;
+terminal TokenValue TRUE, FALSE;
+terminal TokenValue IDEN, ENT, REAL;
+terminal MAS, RESTA, POR, DIV;
+terminal IGUAL, IGUALIGUAL;
+terminal MAYOR, MENOR, MAYORIGUAL, MENORIGUAL;
+terminal TAMBIENBOOL, OBOOL;
+terminal PAP, PCIERRE, CAP, CCIERRE, PUNTOCOMA;
+terminal INTERAPERTURA, INTERCIERRE, DOSPUNTOS, BARRABAJA;
+
+
+
+non terminal LinkedList<Instruccion> P, LInst, ElseCase;
+non terminal Instruccion Inst, Cond, Asig, Decl, While, For, AsigTres, AsigSinPC;
+non terminal E E0, E1, E2, E3, E4, E5;
+
+
+
+P       ::= LInst: l
+            {: RESULT = l; :};
+            
+LInst   ::= Inst: inst LInst: l
+            {: l.addFirst(inst); RESULT = l; :}; 
+LInst   ::=  
+            {: RESULT = new LinkedList(); :};
+
+
+// INSTRUCCIONES
+
+
+Inst    ::= Cond: inst {: RESULT = inst; :};
+Inst    ::= Asig: inst {: RESULT = inst; :};  
+Inst    ::= Decl: inst {: RESULT = inst; :};
+Inst    ::= While: inst {: RESULT = inst; :};
+Inst    ::= For: inst {: RESULT = inst; :};
+Inst    ::= AsigTres: inst {: RESULT = inst; :};  
+
+
+
+// ASIGNACIÓN Y DECLARACIÓN
+
+
+Asig    ::= IDEN: id IGUAL E0: exp PUNTOCOMA
+            {: RESULT = new Asignacion(id.fila, id.columna, id.lexema, exp); :};
+AsigSinPC    ::= IDEN: id IGUAL E0: exp 
+            {: RESULT = new Asignacion(id.fila, id.columna, id.lexema, exp); :};
+AsigTres    ::= IDEN: id IGUAL INTERAPERTURA E0: exp INTERCIERRE IF DOSPUNTOS E0: a
+				BARRABAJA ELSE DOSPUNTOS E0: b PUNTOCOMA
+            {: RESULT = new AsignacionTres(id.fila, id.columna, id.lexema, exp, a, b); :};
+Decl    ::= TIPO_ENT IDEN: id PUNTOCOMA
+            {: RESULT = new Declaracion(id.fila, id.columna, Type.NUM, id.lexema); :};
+Decl    ::= TIPO_BOOL IDEN: id PUNTOCOMA
+            {: RESULT = new Declaracion(id.fila, id.columna, Type.BOOL, id.lexema); :};
+Decl    ::= TIPO_REAL IDEN: id PUNTOCOMA
+            {: RESULT = new Declaracion(id.fila, id.columna, Type.REAL, id.lexema); :};
+
+
+// CONDICIONALES
+
+
+Cond    ::= IF:i PAP E0: exp PCIERRE CAP LInst: inst_if CCIERRE ElseCase: inst_else
+            {: RESULT = new Condicional(i.fila, i.columna, exp, inst_if, inst_else); :};
+
+// Hay dos ElseCase ya que uno así dps de un "si" no es obligatorio que vaya un "elseCase"
+ElseCase::= ELSE CAP LInst: l CCIERRE
+            {: RESULT = l; :};
+ElseCase::= 
+            {: RESULT = new LinkedList(); :};
+
+
+// BUCLES
+
+
+While ::= WHILE:w PAP E0: exp PCIERRE CAP LInst: inst_while CCIERRE
+            {: RESULT = new WhileLoop(w.fila, w.columna, exp, inst_while); :};
+
+
+
+For ::= FOR:f PAP Asig: ini E0: cond PUNTOCOMA AsigSinPC: paso PCIERRE
+        CAP LInst: inst_for CCIERRE
+       {: RESULT = new ForLoop(f.fila, f.columna, ini, cond, paso, inst_for); :};
+
+// EXPRESIONES
+
+// Nivel 0: multiplicación / división
+E0      ::= E0: op1 POR E1: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.MUL, op1, op2); :};
+E0      ::= E0: op1 DIV E1: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.DIV, op1, op2); :};
+E0      ::= E1: exp {: RESULT = exp; :};
+
+// Nivel 1: suma / resta
+E1      ::= E1: op1 MAS E2: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.MAS, op1, op2); :};  
+E1      ::= E1: op1 RESTA E2: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.RESTA, op1, op2); :};
+E1      ::= E2: exp {: RESULT = exp; :};
+
+// Nivel 2: igualdad
+E2      ::= E2: op1 IGUALIGUAL E3: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.IGUAL, op1, op2); :};  
+E2      ::= E3: exp {: RESULT = exp; :};
+
+// Nivel 3: comparaciones
+E3      ::= E3: op1 MAYOR E4: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.MAYOR, op1, op2); :};
+E3      ::= E3: op1 MENOR E4: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.MENOR, op1, op2); :};
+E3      ::= E3: op1 MAYORIGUAL E4: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.MAYORIGUAL, op1, op2); :};
+E3      ::= E3: op1 MENORIGUAL E4: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.MENORIGUAL, op1, op2); :};
+E3      ::= E4: exp {: RESULT = exp; :};
+
+// Nivel 4: operadores booleanos
+E4      ::= E4: op1 TAMBIENBOOL E5: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.AND, op1, op2); :};
+E4      ::= E4: op1 OBOOL E5: op2
+            {: RESULT = new EBin(op1.getFila(), BinOps.OR, op1, op2); :};
+E4      ::= E5: exp {: RESULT = exp; :};
+
+// Nivel 5: operandos básicos
+E5      ::= ENT: value
+            {: RESULT = new Num(value.fila, value.columna, value.lexema); :}; 
+E5      ::= REAL: value
+            {: RESULT = new Real(value.fila, value.columna, value.lexema); :};
+E5      ::= TRUE: t
+            {: RESULT = new BoolValue(t.fila, t.columna, "verdadero"); :};
+E5      ::= FALSE: f 
+            {: RESULT = new BoolValue(f.fila, f.columna, "falso"); :};
+E5      ::= IDEN : id
+            {: RESULT = new Identificador(id.fila, id.columna, id.lexema); :}; 
+E5      ::= PAP E0: exp PCIERRE  
+            {: RESULT = exp; :};
+
+

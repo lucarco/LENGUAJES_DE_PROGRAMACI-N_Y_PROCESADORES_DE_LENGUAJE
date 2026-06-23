@@ -1,0 +1,34 @@
+package constructorAST.alex;
+
+import java_cup.runtime.Symbol;
+
+public class UnidadLexica extends Symbol {
+    public UnidadLexica(int fila, int columna, int clase) {
+	super(clase,new TokenValue(fila,columna));
+    }
+    public UnidadLexica(int fila, int columna, int clase, String lexema) {
+	super(clase,new TokenValue(lexema,fila,columna));
+    }
+    public int clase () {return sym;}
+    public String lexema() {return ((TokenValue)value).lexema;}    
+    public int fila() {return ((TokenValue)value).fila;}
+    public int columna() {return ((TokenValue)value).columna;}
+}
+//
+//public class UnidadLexica extends Symbol {
+//    
+//    public UnidadLexica(int fila, int columna, int clase) {
+//        // CORRECCIÓN: Pasamos fila y columna como 2º y 3º argumento al super
+//        super(clase, fila, columna, new TokenValue(fila, columna));
+//    }
+//    
+//    public UnidadLexica(int fila, int columna, int clase, String lexema) {
+//        // CORRECCIÓN: Lo mismo aquí
+//        super(clase, fila, columna, new TokenValue(lexema, fila, columna));
+//    }
+//
+//    public int clase () {return sym;}
+//    public String lexema() {return ((TokenValue)value).lexema;}    
+//    public int fila() {return ((TokenValue)value).fila;}
+//    public int columna() {return ((TokenValue)value).columna;}
+//}

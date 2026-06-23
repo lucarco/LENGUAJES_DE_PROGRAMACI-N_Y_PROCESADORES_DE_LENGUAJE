@@ -1,0 +1,3 @@
+For ::= FOR PAP Asig: ini PUNTOCOMA E0: cond PUNTOCOMA Asig: paso PCIERRE
+         CAP LInst: inst_for CCIERRE
+         {: RESULT = new ForLoop(ini, cond, paso, inst_for); :};

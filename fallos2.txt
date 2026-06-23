@@ -1,0 +1,72 @@
+# Este es un ejemplo #
+
+ent x;
+ent y;
+bool b;
+ent lucas_ucm_alicia www ;
+ent jaja;
+
+wwwwww
+
+b = 7 == www   7;
+si (b)[
+   y = 9;
+   x = 4;
+] sino [
+   x = 5;
+   y = 5;
+]
+
+ent out;
+
+si (x == www y)[
+   out = 12;
+] sino [
+   out = 99;
+]
+
+
+# Prueba de que funciona el real #
+real a;
+a = 5;
+a = 5.678;
+
+
+# Prueba de que funciona la doble condicion #
+b = falso;
+y = 4;
+x = y;
+ent lucas;
+
+si ((b == verdadero) && (x == y) )[
+lucas = 0;
+] sino [
+lucas = 1;
+]
+
+
+
+ent aux1;
+ent aux2;
+ent aux3;
+ent aux4;
+x = 0;
+y = 1;
+
+mientras (x > y) [
+    aux1 = 1;
+]
+mientras (x < y) [
+    aux2 = 1;
+    x = x + 1; 
+]
+mientras (x >= y) [
+    aux3 = 1;
+    x = x - 1;
+]
+mientras (x <= y)[
+    aux4 = 1;
+    x = x + 1; 
+]
+
+

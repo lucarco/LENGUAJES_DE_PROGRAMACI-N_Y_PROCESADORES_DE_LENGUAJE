@@ -1,0 +1,50 @@
+// Nivel 0: multiplicación / división
+E0      ::= E0: op1 POR E1: op2
+            {: RESULT = new EBin(BinOps.MUL, op1, op2); :};
+E0      ::= E0: op1 DIV E1: op2
+            {: RESULT = new EBin(BinOps.DIV, op1, op2); :};
+E0      ::= E1: exp {: RESULT = exp; :};
+
+// Nivel 1: suma / resta
+E1      ::= E1: op1 MAS E2: op2
+            {: RESULT = new EBin(BinOps.MAS, op1, op2); :};  
+E1      ::= E1: op1 RESTA E2: op2
+            {: RESULT = new EBin(BinOps.RESTA, op1, op2); :};
+E1      ::= E2: exp {: RESULT = exp; :};
+
+// Nivel 2: igualdad
+E2      ::= E2: op1 IGUALIGUAL E3: op2
+            {: RESULT = new EBin(BinOps.IGUAL, op1, op2); :};  
+E2      ::= E3: exp {: RESULT = exp; :};
+
+// Nivel 3: comparaciones
+E3      ::= E3: op1 MAYOR E4: op2
+            {: RESULT = new EBin(BinOps.MAYOR, op1, op2); :};
+E3      ::= E3: op1 MENOR E4: op2
+            {: RESULT = new EBin(BinOps.MENOR, op1, op2); :};
+E3      ::= E3: op1 MAYORIGUAL E4: op2
+            {: RESULT = new EBin(BinOps.MAYORIGUAL, op1, op2); :};
+E3      ::= E3: op1 MENORIGUAL E4: op2
+            {: RESULT = new EBin(BinOps.MENORIGUAL, op1, op2); :};
+E3      ::= E4: exp {: RESULT = exp; :};
+
+// Nivel 4: operadores booleanos (modificado para aceptar expresiones de comparación)
+E4      ::= E4: op1 TAMBIENBOOL E3: op2
+            {: RESULT = new EBin(BinOps.AND, op1, op2); :};
+E4      ::= E4: op1 OBOOL E3: op2
+            {: RESULT = new EBin(BinOps.OR, op1, op2); :};
+E4      ::= E3: exp {: RESULT = exp; :};
+
+// Nivel 5: operandos básicos
+E5      ::= ENT: value
+            {: RESULT = new Num(value.lexema); :}; 
+E5      ::= REAL: value
+            {: RESULT = new Real(value.lexema); :};
+E5      ::= TRUE
+            {: RESULT = new BoolValue("verdadero"); :};
+E5      ::= FALSE 
+            {: RESULT = new BoolValue("falso"); :};
+E5      ::= IDEN : id
+            {: RESULT = new Identificador(id.lexema); :}; 
+E5      ::= PAP E0: exp PCIERRE  
+            {: RESULT = exp; :};

@@ -1,0 +1,9 @@
+cd 'Desktop\UNI\3Tercero\Primer Cuatri\LPPL\T3\P3\P3\src'
+
+Para crear cuando se modifica mini_lexico.l crea AnalizadorLexicoTiny
+java -cp jflex.jar jflex.Main mini_lexico.l
+java -cp cup.jar java_cup.Main -parser AnalizadorSintacticoTiny -symbols ClaseLexica -nopositions Tiny.cup
+
+
+Se crea ClaseLexica y Tiny.cup con ContructorAST:
+java -cp cup.jar java_cup.Main -parser ConstructorAST -symbols ClaseLexica -nopositions Tiny.cup

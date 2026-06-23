@@ -1,0 +1,171 @@
+# Este es un ejemplo #
+
+ent x;
+ent y;
+bool b;
+
+ent lucas_ucm_alicia www ;
+ent jaja;
+
+wwwwww
+
+ent si_else;
+b = falso;
+si (b)[
+   si_else = 1;
+] sino [
+   si_else = 0;
+]
+
+ent solo_si;
+si(b)[
+	solo_si = 1;
+]
+
+
+# Prueba de que funciona la doble condicion #
+b = verdadero;
+y = 4;
+x = y;
+ent doble_condicion;
+
+si ((b == verdadero) && (x == y) )[
+doble_condicion = 0;
+] sino [
+doble_condicion = 1;
+]
+
+# Prueba de la triple condicion #
+ent triple_condicion;
+ent z;
+z = y + 1;
+
+si ((b == verdadero) && (x == y) && (z >= y))[
+	triple_condicion = 0;
+] sino [
+	triple_condicion = 1;
+]
+
+# Prueba de que funciona el real #
+real el_real;
+el_real = 5;
+el_real = 5.678;
+
+
+# Prueba de que funciona la doble condicion #
+b = falso;
+y = 4;
+x = y;
+ent lucas;
+
+si ((b == verdadero) && (x == y) )[
+lucas = 0;
+] sino [
+lucas = 1;
+]
+
+
+ent aux1;
+ent aux2;
+ent aux3;
+ent aux4;
+
+aux1 = 0;
+aux2 = 0;
+aux3 = 0;
+aux4 = 0;
+
+x = 0;
+y = 5;
+
+# no entra #
+mientras (x > y) [
+    aux1 = aux1 + 1;
+]
+# x = 0 #
+mientras (x < y) [
+    aux2 = aux2 + 1;
+    x = x + 1; 
+]
+# x = 5 #
+mientras (x >= y) [
+    aux3 = aux3 + 1;
+    x = x - 1;
+]
+# x = 4 #
+mientras (x <= y)[
+    aux4 = aux4 + 1;
+    x = x + 1; 
+]
+# x = 6 #
+
+ent aux_and;
+
+aux_and = 0;
+x = 0;
+b = verdadero;
+
+mientras ((x < 10) && (b == verdadero)) [
+    aux_and = aux_and + 1;
+    x = x + 1;
+    
+    si (x == 3) [
+        b = falso;
+    ]
+]
+
+ent aux_or;
+
+aux_or = 0;
+x = 0;
+y = 0;
+
+mientras ((x < 2) || (y < 4)) [
+    aux_or = aux_or + 1;
+    x = x + 1;
+    y = y + 1;
+]
+
+ent i;
+ent aux_para;
+aux_para = 0;
+i = 0;
+para(i = 0; i < 10; i = i wwww + 1)[
+	ent esto_esta_sdentro_del_bucle_or;
+	aux_para = aux_para + 1;
+]
+
+
+bool aux_asig_ternario;
+ent valorUno;
+ent valorDos;
+bool hola;
+bool adios;
+valorUno = 1;
+valorDos = 3;
+hola = verdadero;
+adios = falso;
+
+aux_asig_ternario = ¿valorUno <= valorDos? si: hola _ sino: adios;
+
+ent w;
+ent nulo;
+
+
+
+#----------------------------------------------------#
+
+# Fallos de ejecucion: #
+# y = x / 0;  
+b = verdadero;
+mientras(b)[]#
+#ent x;
+ent f;#
+#ent ww# # daria error ya que se ve como que se ha pulsado muchas veces la w sin querer#
+#para(i = 0; i < 10; i = i wwww - 1;)[]#
+
+#
+para(i = 0; i + 10; i = i wwww + 1;)[
+	ent esto_esta_sdentro_del_bucle_or;
+	aux_para = aux_para + 1;
+]#

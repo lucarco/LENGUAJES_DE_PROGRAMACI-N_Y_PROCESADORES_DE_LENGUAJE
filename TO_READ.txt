@@ -1,0 +1,82 @@
+ALUMNOS:
+Lucas Arranz Corral
+Alicia Castro Mesquida
+
+ARCHIVO DE PRUEBAS FINAL:
+fallos4.txt
+
+Primer TO_READ(antes del primer feedback):
+
+AÑADIDOS(TODO LO MÍNIMO):
+Declaración de variables simples de tipos entero, booleano y real.
+Bloques anidados.
+Declaración explícita del tipo de las variables. Tipos básicos predefinidos:
+enteros y booleanos. Operadores infijos, con distintas prioridades y asociatividades
+para estos tipos. Comprobación de tipos.
+Instrucción de asignación incluyendo elementos de arrays, condicional
+con una y dos ramas (if-else), y algún tipo de bucle (while, for). Expresiones
+formadas por constantes, identificadores y operaciones con operadores infijos.
+Indicación del tipo de error, fila y columna. Parar la compilación.
+Se deben realizar al menos análisis de identificadores y análisis de tipos de cara
+a detectar errores semánticos en el programa.
+
+ADEMÁS:
+Que después del if no sea necesario que haya un else.
+Operaciones binarias básicas.
+
+CARTAS:
+
+LÉXICO
+
+	Gatito comilón:
+		- Tecla rota: Tu gato tenía hambre y ha causado un buen 
+		estropicio! Ha comida letra "f" de tu teclado. Asegúrate 
+		de que no va a aparecer nunca en un programa.
+		- Más desastre: Todo va incluso peor, ahora de pronto 
+		ha comido un par de cables y de vez en cuando aparecen 
+		muchas "wwwww" seguidas al escribir, ¡maldito gatito!
+		
+	Solución(mini_lexico.l):
+		- Tecla rota: declaración de letra salteándose la "f" y la "F".
+		- Más desastre: declaración de wdobles y que no corresponan a 
+						ninguna operación(igual que comentario).
+		
+SINTÁCTICO
+
+	¿Y ahora quién soy?
+		- Asignación condicional: tu lenguaje debe tener una 
+		instrucción que permita realizar asignaciones condicionales.
+		
+	Lo que hemos hecho:
+		FIN = ¿CONDICION? si: A _ sino: B;\n
+		
+	Solución(mini_lexico.l, Tiny.cup, AsignacionTres.java):
+		- mini_lexico.l: declaración de "¿", "?", ":".
+		- Tiny.cup: Declaración y asignación
+		- AsignaciónTres.java: ver que no haya fallos y ejecución.
+		
+ANÁLISIS
+
+	Afán de protagonismo
+		- Tú eres la estrella: a veces hay variables que son asignadas
+		constantemente, mientras que otras apensa trabajan. Has decidido que 
+		tu compilador te avise si tienes alguna variable estrella que haya sido asignada
+		al menos 3 veces.
+		Ojo! No hace falta que consideres instrucciones dentro de bucles
+		o condicionales.
+		
+	Solución:
+		- Asignacion.java y AsignacionTres.java: en el execute llaman a addAsignacion()
+		de la variable.
+		- Declaracion.java: nuevo atributo contAsignaciones y nueva funcion addAsignacion().
+		Cuando llega a 3 o más enseña por pantalla cuántas veces ha sido asignada.
+		
+	No me olvides
+		- Evitando perdidas: Estás harto de olvidar variables: las defines al principio pero luego
+		te despistas y las dejas sin dar valor. Quieres un compliador que te avise para que así no
+		las dejes solas.
+		Ojo! No hace falta que consideres instrucciones dentro de bucles o condicionales.
+		
+	Solución:
+		- Main.java: al final, cuando se enseñan los valores de las variables. Se inserta un if que 
+		cuando el valor sea null enseñe "Variable DORY".

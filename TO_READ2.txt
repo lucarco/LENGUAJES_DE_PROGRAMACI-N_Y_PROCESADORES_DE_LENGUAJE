@@ -1,0 +1,44 @@
+ALUMNOS:
+Lucas Arranz Corral
+Alicia Castro Mesquida
+
+ARCHIVO DE PRUEBAS FINAL:
+fallos4.txt
+
+
+Después del feedback de la primera entrega:
+
+
+Análisis léxico:
+	- Para dejar variables que se llamen "w" pero con más de una w se considera que es una pulsación involuntaria
+	se ha cambiado de wdobles = (w)* a wdobles = ww(w)*
+	por lo que "ent w;" no daría fallo pero sí "ent ww;" que daría elemento inseperado.
+	
+Análisis sintáctico:
+	- Había un ; extra en la asignación del for: 
+		para(declaracion; condicion; asignacion;) [lista de instrucciones]
+	Ahora se ha cambiado:
+		para(declaracion; condicion; asignacion;) [lista de instrucciones]
+	para ello se ha creado un nuevo no terminal llamado AsigSinPC que tiene exactamente la misma
+	sintaxis pero sin ; al final
+	
+	- Mandar desde el cup, fila y columna de las instrucciones y expresiones.
+	Conseguido de manera que las instrucciones se declaran terminal TokenValue. Ya que TokenValue 
+	tiene la fila y columna conseguida durante el parseo.
+	Para las expresiones se aprovecha y se manda la fila de op1 en vez de hacer lo mismo 
+	con todas las expresiones. Las expresiones binarias solamente tienen fila, ya que la columna podría ser 
+	cualquiera.
+	Se ha añadido TokenValue a: IF, ELSE, WHILE, FOR, TRUE, FALSE;
+	Además se ha aprovechado y también se piden fila y columna desde el reporte de errores de ejecución.
+	Se podría enseñar en el toString() de la clase. Pero se ha añadido a la interfaz de ASTNode y se pide 
+	desde ahí. Se ha preferido así para que cada funciói sea más específica.
+	
+Análisis semántico:
+
+	- Carta: se crea un nuevo método en Instruccion que se llama analisis_cartas() y se llama desde el Main.java 
+	después de la parte de checkTypes().
+	La clase declaracion lleva el conteo de las veces que ha sido asignada esa variable.
+	Solamente se cuentan las instrucciones fuera de bucles ya que analisis_cartas() está vacio en Instruccion.java
+	mientras que se hace @Override en el Asignacion y AsignacionTres(asignador ternario) donde se añade 1 al contador.
+	Si quisiesemos añadir las de dentro de los bucles se haría de forma similar al checkTypes con la lista que
+	se le pasa al constructor como argumento.

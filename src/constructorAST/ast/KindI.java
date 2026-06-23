@@ -1,0 +1,3 @@
+package constructorAST.ast;
+
+public enum KindI {CONDICIONAL, ASIGNACION, DECLARACION, WHILE, FOR, ASIGNACION_TERNARIA}

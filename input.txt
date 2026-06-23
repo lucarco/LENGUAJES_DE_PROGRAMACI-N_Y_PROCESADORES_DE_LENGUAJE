@@ -1,0 +1,23 @@
+# Este es un ejemplo #
+
+ent x;
+ent y;
+bool b;
+
+b = 7 == 7;
+si (b)[
+   y = 9;
+   x = 4;
+] sino [
+   x = 5;
+   y = 5;
+]
+
+ent out;
+
+si (x == y)[
+   out = 12;
+] sino [
+   out = 99;
+]
+

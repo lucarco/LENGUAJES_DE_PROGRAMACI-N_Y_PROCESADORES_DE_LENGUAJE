@@ -1,0 +1,90 @@
+Buenas!
+
+Os mando mi feedback sobre vuestra entrega de LPPL. En general está todo muy bien, os indico cuáles son
+posibles mejoras para subir nota. El mayor problema está en las cartas de análisis semántico, pero es fácil de
+arreglar :)
+
+Saludos,
+Clara
+
+
+
+
+Análisis léxico:
+
+
+- Bien la declaración de las palabras reservadas en el .l. Es todo correcto.
+
+- Bien como prohibis el usar la letra f.
+
+- Con la w también es correcto como lo tratais (arriba del todo y no generando nada) y no procesais pero hay
+un pequeña mejora que podeís hacer -> en vez de prohibir cualquier secuencia de w* (que no dejaría usar solo
+w por ejemplo) podéis prohibir secuencias que tengan más de una (es decir, dejar w pero no ww).
+
+La nota es aproximada, solo para que tengáis una orientación de cómo iría:
+NOTA: 1/1
+NOTA GATO COMILÓN: 0.85/1
+
+
+
+
+Análisis sintáctico:
+
+- Muy bien la estructura del CUP. Bien definidos los condicionales y el while/for -> pequeña cosilla, hay un
+; extra en el for
+
+- Mejora principal que podéis hacer y que encajaría con lo que tenéis: dejar declarar arrays.
+
+- Las nuevas instrucciones que habéis añadido funcionan bien y son correctas.
+
+- Muy bien los niveles de prioridad
+
+- Bien los nuevos nodos y como funciona el while y el for. Toda la parte es correcta
+
+- Perfecta la carta de asignación condicional.
+
+- Otra mejora: mandar info a los nodos (linea y columna) para poder mandar mejor información en el análisis semántico
+de los fallos que se encuentran (añadir campos linea y columna a los nodos y mandarlo desde el cup).
+
+
+NOTA: 1,4/2
+NOTA CARTA: 2/2
+
+
+
+Análisis semántico
+
+- Perfecto el análisis de tipos e identificadores. Revisais correctamente todas las ramas y expresiones,
+bien gestionados los tipos reales y enteros.
+
+- Al no tener arrays esta parte os queda más sencillo de lo que debería, os baja la nota eso.
+
+- Carta: aquí si que hay más problema: la idea de las cartas es que sean un análisis estático que
+se hace ANTES de ejecutar, no a la vez o después. Lo estáis haciendo dentro del execute() pero la idea
+es que sea otro análisis como los de identificadores y tipos. La manera en que lo controlais si que es
+correcta, pero debéis moverlo antes (disculpad si no deje esto del todo claro en la carta).
+Es decir, antes del execute() deberíais tener los análisis de identificadores, tipos y tu_eres_estrella()
+o variable_dory().
+
+
+
+NOTA: 1,7/2
+Cartas: 0,75/2
+
+
+
+
+
+Ejecución: perfecto esto, bien el análisis para evitar bucles infinitos.
+Bien utilizar reales para mandar los posibles valores. Posible mejora -> dejar que el usuario pueda mandar
+valores de inpus.
+
+Nota: 1/1.
+
+
+Nota total aproximada: entre 8 y 8.75
+
+Muy muy bien en general la práctica, lo que más os penaliza es el no tener arrays y los problemas en las
+cartas de análisis estático.
+
+

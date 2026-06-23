@@ -1,0 +1,15 @@
+
+
+1) Modificar mini_lexico.l y AlexOperations.java
+
+2) Modificar Tiny.cup
+Utilizar los mismos nombres que en AlexOperations.java
+
+3) Modificar Tiny.cup
+añadir los nuevos no terminales necesarios
+y las nuevas expresiones a añadir en la gramática
+
+4)Generar los nuevos nodos en el ast
+
+5)Hacer que las reglas del analizador sintáctico llame a las constructoras
+de los nodos ast

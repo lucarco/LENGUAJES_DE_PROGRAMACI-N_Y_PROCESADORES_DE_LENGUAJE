@@ -1,0 +1,4 @@
+- execute() en cada instrucción y expr
+getValue() y setValue() en declaración
+error en ejecución
+main llama a execute() en cada instr y muestra el resultado
