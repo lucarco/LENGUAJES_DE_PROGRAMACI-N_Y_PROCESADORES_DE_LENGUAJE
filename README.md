@@ -1,0 +1,9 @@
+Proyecto con el objetivo de entender e inventar nuestro propio lenguaje.  
+Análisis léxico, análisis sintáctico y por último ejecución.
+
+**Desarrollo de Procesador de Lenguajes (Compilador Tiny) | Java, JFlex, CUP**
+
+- Construcción del front-end de un compilador para un lenguaje de programación personalizado, utilizando Java junto con JFlex para el análisis léxico y CUP para el análisis sintáctico. 
+- Diseño e implementación orientada a objetos del Árbol de Sintaxis Abstracta (AST), creando jerarquías de nodos para el control de flujo (bucles while/for, condicionales), operaciones binarias, declaraciones y tipos de datos. 
+- Desarrollo de un analizador semántico apoyado en una Tabla de Símbolos (TablaSimbolos) para la validación de variables, tipos y ámbitos (scopes). 
+- Implementación de un sistema centralizado y robusto para la captura, gestión y reporte de errores léxicos, sintácticos y de ejecución (GestionErroresTiny). 
